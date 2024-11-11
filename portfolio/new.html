@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Registration Form</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+    .active {
+      font-weight: bold;
+      color: red;
+    }
+    nav {
+      background: #333;
+      padding: 10px;
+      position: sticky;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      margin: 0;
+      padding: 0;
+    }
+    nav ul li {
+      margin: 0 15px;
+    }
+    nav ul li a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 16px;
+    }
+    nav ul li a.active {
+      font-weight: bold;
+      color: red;
+    }
+    section {
+      padding: 60px 20px;
+      text-align: center;
+    }
+    .project-grid {
+      display: flex;
+      overflow: hidden;
+      width: 100%;
+      justify-content: center;
+    }
+    .project-item {
+      min-width: 300px;
+      max-width: 300px;
+      margin: 0 10px;
+      transition: transform 0.5s ease;
+    }
+    .project-item img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+    }
+    .carousel-controls {
+      display: flex;
+      justify-content: space-between;
+      margin: 20px 0;
+    }
+    .carousel-button {
+      cursor: pointer;
+      font-size: 1.5em;
+    }
+    #contact-links a {
+      display: block;
+      margin: 10px 0;
+      color: #000;
+      text-decoration: none;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+<nav id="navbar">
+  <ul id="nav-list">
+    <li><a href="#welcome-section">About</a></li>
+    <li><a href="#project-section">Work</a></li>
+    <li><a href="#contact-section">Contact</a></li>
+  </ul>
+</nav>
+<section id="welcome-section" class="welcome-section">
+  <h2>Hey I am Aditi</h2>
+  <p>a web developer</p>
+</section>
+<section id="project-section" class="project-section">
+  <h2>These are some of my projects</h2>
+  <div class="project-grid">
+    <div class="project-item">
+      <a href="https://justaditi.github.io/SimonSays-Game/" target="_blank">
+        <img src="Screenshot 2024-04-19 214026.png" alt="Simonsay">
+        <p class="project-title">Simon Says</p>
+      </a>
+    </div>
+    <div class="project-item">
+      <a href="https://justaditi.github.io/Amazon_Clone/" target="_blank">
+        <img src="https://th.bing.com/th/id/OIP.V_ruuIjHlVWreCEqBOXPVQHaFj?rs=1&pid=ImgDetMain" alt="amazon">
+        <p class="project-title">Amazon Clone</p>
+      </a>
+    </div>
+    <div class="project-item">
+      <a href="https://justaditi.github.io/SimonSays-Game/">
+        <img src="https://2.bp.blogspot.com/-OS6uO4mPiRI/WgHictR7BII/AAAAAAAAYqk/13cZCkLH_8MMpEZgzoiNfQ0o8MpSt6VeACLcBGAs/s1600/simon+dice.jpeg" alt="Simonsay">
+        <p class="project-title">Simon Says</p>
+      </a>
+    </div>
+  </div>
+  <div class="carousel-controls">
+    <span class="carousel-button" id="prev-btn">&#10094;</span>
+    <span class="carousel-button" id="next-btn">&#10095;</span>
+  </div>
+</section>
+<section id="contact-section" class="contact-section">
+  <div id="contact-header">
+    <h2>Let's work together...</h2>
+    <p id="contact-p">How do you take your coffee?</p>
+  </div>
+  <div id="contact-links">
+    <a href="https://github.com/Justaditi" id="profile-link" target="_blank"><i class="fa-brands fa-github"></i> GitHub</a>
+    <a href="https://twitter.com/Adhost7" id="profile-link" target="_blank"><i class="fa-brands fa-twitter"></i> Twitter</a>
+    <a href="mailto:youremail@example.com" id="profile-link" target="_blank"><i class="fas fa-at"></i>Send a mail</a>
+  </div>
+</section>
+<script>
+  document.querySelectorAll('nav ul li a').forEach(anchor => {
+    anchor.addEventListener('click', function(event) {
+      document.querySelectorAll('nav ul li a').forEach(el => el.classList.remove('active'));
+      event.target.classList.add('active');
+    });
+  });
+
+  window.addEventListener('scroll', () => {
+    let sections = document.querySelectorAll('section');
+    let navLinks = document.querySelectorAll('nav ul li a');
+    sections.forEach((section, index) => {
+      let rect = section.getBoundingClientRect();
+      if (rect.top <= 0 && rect.bottom > 0) {
+        navLinks.forEach(link => link.classList.remove('active'));
+        navLinks[index].classList.add('active');
+      }
+    });
+  });
+
+  let currentSlide = 0;
+  const slides = document.querySelectorAll('.project-item');
+  const totalSlides = slides.length;
+
+  document.getElementById('prev-btn').addEventListener('click', () => {
+    changeSlide(-1);
+  });
+
+  document.getElementById('next-btn').addEventListener('click', () => {
+    changeSlide(1);
+  });
+
+  function changeSlide(direction) {
+    slides[currentSlide].style.transform = `translateX(${100 * direction}%)`;
+    currentSlide = (currentSlide + direction + totalSlides) % totalSlides;
+    slides[currentSlide].style.transform = 'translateX(0)';
+  }
+</script>
+</body>
+</html>
